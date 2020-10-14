@@ -1,0 +1,25 @@
+spring:
+    datasource:
+        driver-class-name: org.h2.Driver # 驱动
+        url: jdbc:h2:file:${site.location}/storage/db_mblog
+
+        username: root
+        password:
+    jpa:
+        database: h2
+        show-sql: false
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate.format_sql: true
+            hibernate.naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+            hibernate.cache.use_second_level_cache: false
+            hibernate.search.default.directory_provider: filesystem
+            hibernate.search.default.indexBase: ${site.location}/storage/indexes
+    h2:
+        console:
+            enabled: true
+            path: /console
+            settings:
+                web-allow-others: true
+                trace: true
