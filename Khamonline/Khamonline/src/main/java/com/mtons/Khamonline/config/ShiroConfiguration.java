@@ -69,6 +69,7 @@ public class ShiroConfiguration {
          */
         Map<String, String> hashMap = new LinkedHashMap<>();
         hashMap.put("/", "anon");
+        hashMap.put("/execute_payment", "anon")
         hashMap.put("/review_payment", "anon");
         hashMap.put("/home", "anon");
         hashMap.put("/index", "anon");
