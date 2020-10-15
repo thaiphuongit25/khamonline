@@ -3,6 +3,8 @@
  */
 package com.mtons.Khamonline.web.controller.site.posts;
 
+import com.mtons.Khamonline.modules.data.OrderDetail;
+import com.mtons.Khamonline.modules.data.PaymentServices;
 import com.mtons.Khamonline.modules.data.PostVO;
 import com.mtons.Khamonline.modules.service.ChannelService;
 import com.mtons.Khamonline.modules.service.PostService;
@@ -17,6 +19,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+import com.paypal.api.payments.*;
+import com.paypal.base.rest.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * PostController
@@ -64,7 +71,7 @@ public class PostController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("/submit")
-	public String post(PostVO post) {
+	public String post(PostVO post, HttpServletResponse response) {
 		Assert.notNull(post, "Thông số không đầy đủ");
 		Assert.state(StringUtils.isNotBlank(post.getTitle()), "Tiêu đề không được để trống");
 		Assert.state(StringUtils.isNotBlank(post.getTelephone()), "Số điện thoại không được để trống");
@@ -72,6 +79,12 @@ public class PostController extends BaseController {
 
 		AccountProfile profile = getProfile();
 		post.setAuthorId(profile.getId());
+		String product = "Thanh toan cho đơn khám";
+		String subtotal = "0";
+		String shipping = "0";
+		String tax = "0";
+		String total = "10";
+		OrderDetail orderDetail = new OrderDetail(product, subtotal, shipping, tax, total);
 
 		// When modifying, verify ownership
 		if (post.getId() > 0) {
@@ -81,7 +94,16 @@ public class PostController extends BaseController {
 
 			postService.update(post);
 		} else {
-			postService.post(post);
+			try {
+				PaymentServices paymentServices = new PaymentServices();
+				String approvalLink = paymentServices.authorizePayment(orderDetail);
+
+				response.sendRedirect(approvalLink);
+				postService.post(post);
+			} catch (PayPalRESTException | IOException ex) {
+				ex.printStackTrace();
+			}
+
 		}
 		return String.format(Views.REDIRECT_USER_HOME, profile.getId());
 	}

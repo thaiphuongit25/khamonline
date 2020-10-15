@@ -16,7 +16,7 @@ public interface Views {
     /**
      */
     String LOGIN = "/auth/login";
-    String HOME = "/";
+    String HOME = "/home";
 
     /**
      */
@@ -30,9 +30,11 @@ public interface Views {
      */
     String FORGOT = "/auth/forgot";
 
+
     /**
      */
     String INDEX = "/index";
+    String REVIEW_PAYMENT = "/review_payment";
 
     String USER_METHOD_TEMPLATE = "/user/method_%s";
 

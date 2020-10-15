@@ -25,7 +25,7 @@ import com.mtons.Khamonline.web.controller.BaseController;
 @Controller
 public class IndexController extends BaseController{
 	
-	@RequestMapping(value= {"/", "/index"})
+	@RequestMapping(value= {"/index"})
 	public String root(ModelMap model, HttpServletRequest request) {
 		String order = ServletRequestUtils.getStringParameter(request, "order", Consts.order.NEWEST);
 		int pageNo = ServletRequestUtils.getIntParameter(request, "pageNo", 1);

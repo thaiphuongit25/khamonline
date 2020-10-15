@@ -254,7 +254,13 @@ abbr[data-original-title], abbr[title] {
 .site-header a {
     color: #dbdbdb;
 }
-
+.introduce-title {
+    text-align: center;
+    font-weight: bold;
+}
+.myCarousel {
+    max-height: 600px;
+}
 .site-header .navbar-nav {
     margin-left: 25px;
 }

@@ -9,6 +9,8 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.mgt.SubjectFactory;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
+import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,7 +51,7 @@ public class ShiroConfiguration {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
-        shiroFilter.setLoginUrl("/login")
+        shiroFilter.setLoginUrl("/login");
         shiroFilter.setSuccessUrl("/");
         shiroFilter.setUnauthorizedUrl("/error/reject.html");
 
@@ -66,6 +68,10 @@ public class ShiroConfiguration {
          *
          */
         Map<String, String> hashMap = new LinkedHashMap<>();
+        hashMap.put("/", "anon");
+        hashMap.put("/review_payment", "anon");
+        hashMap.put("/home", "anon");
+        hashMap.put("/index", "anon");
         hashMap.put("/dist/**", "anon");
         hashMap.put("/theme/**", "anon");
         hashMap.put("/storage/**", "anon");
