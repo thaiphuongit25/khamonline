@@ -1,12 +1,13 @@
 <div align="center">
     <h1>Please Review Before Paying</h1>
-    <form action="execute_payment" method="post">
+    <form action="/execute_payment" method="post" enctype="multipart/form-data">
         <table>
             <tr>
                 <td colspan="2"><b>Transaction Details:</b></td>
                 <td>
                     <input type="hidden" name="paymentId" value="${param.paymentId}" />
                     <input type="hidden" name="PayerID" value="${param.PayerID}" />
+                    <input type="hidden" name="transaction" value="${param.transaction}" />
                 </td>
             </tr>
             <tr>

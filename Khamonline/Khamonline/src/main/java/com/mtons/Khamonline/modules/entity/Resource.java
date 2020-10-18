@@ -26,17 +26,17 @@ public class Resource implements Serializable {
 
     /**
      */
-    @Column(name = "md5", columnDefinition = "varchar(100) NOT NULL DEFAULT ''")
+    @Column(columnDefinition = "varchar(100) NOT NULL DEFAULT ''")
     private String md5;
 
     /**
      */
-    @Column(name = "path", columnDefinition = "varchar(255) NOT NULL DEFAULT ''")
+    @Column(columnDefinition = "varchar(255) NOT NULL DEFAULT ''")
     private String path;
 
     /**
      */
-    @Column(name = "amount", columnDefinition = "bigint(20) NOT NULL DEFAULT '0'")
+    @Column(columnDefinition = "bigint(20) NOT NULL DEFAULT '0'")
     private long amount;
 
     @Column(name = "create_time")
@@ -47,4 +47,51 @@ public class Resource implements Serializable {
     @Generated(GenerationTime.ALWAYS)
     private LocalDateTime updateTime;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(long amount) {
+        this.amount = amount;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
 }

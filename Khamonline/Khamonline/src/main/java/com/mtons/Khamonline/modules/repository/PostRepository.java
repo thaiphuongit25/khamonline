@@ -50,4 +50,6 @@ public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificat
     @Query("update Post set comments = comments + :increment where id = :id")
     void updateComments(@Param("id") long id, @Param("increment") int increment);
 
+    @Query("select p from Post p where p.status = :status and p.ngaykham >= :startDate and p.ngaykham <= :endDate")
+    List<Post> countPostByStatusAndDate(int status, String startDate, String endDate);
 }

@@ -24,6 +24,12 @@
     "permission": "user:list"
   },
   {
+    "icon": "fa fa-history icon-xlarge",
+    "name": "Lịch sử thanh toán",
+    "url": "admin/payment/history",
+    "permission": "user:list"
+  },
+  {
     "icon": "fa fa fa-registered icon-xlarge",
     "name": "Quyền hạn",
     "url": "admin/role/list",

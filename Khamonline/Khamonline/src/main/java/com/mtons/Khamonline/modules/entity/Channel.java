@@ -49,6 +49,8 @@ public class Channel implements Serializable {
 	 */
 	private int weight;
 
+	private int typeChannelId;
+
 	public int getId() {
 		return id;
 	}
@@ -95,5 +97,13 @@ public class Channel implements Serializable {
 
 	public void setWeight(int weight) {
 		this.weight = weight;
+	}
+
+	public int getTypeChannelId() {
+		return typeChannelId;
+	}
+
+	public void setTypeChannelId(int typeChannelId) {
+		this.typeChannelId = typeChannelId;
 	}
 }

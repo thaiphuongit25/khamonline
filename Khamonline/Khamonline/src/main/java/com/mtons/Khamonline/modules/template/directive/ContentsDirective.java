@@ -4,11 +4,14 @@
 package com.mtons.Khamonline.modules.template.directive;
 
 import com.mtons.Khamonline.modules.data.PostVO;
+import com.mtons.Khamonline.modules.data.view.ChannelView;
 import com.mtons.Khamonline.modules.entity.Channel;
 import com.mtons.Khamonline.base.lang.Consts;
 import com.mtons.Khamonline.base.utils.BeanMapUtils;
+import com.mtons.Khamonline.modules.entity.TypeChannel;
 import com.mtons.Khamonline.modules.service.ChannelService;
 import com.mtons.Khamonline.modules.service.PostService;
+import com.mtons.Khamonline.modules.service.TypeChannelService;
 import com.mtons.Khamonline.modules.template.DirectiveHandler;
 import com.mtons.Khamonline.modules.template.TemplateDirective;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -32,6 +37,8 @@ public class ContentsDirective extends TemplateDirective {
     private PostService postService;
     @Autowired
     private ChannelService channelService;
+    @Autowired
+    private TypeChannelService typeChannelService;
 
     @Override
     public String getName() {
@@ -46,9 +53,22 @@ public class ContentsDirective extends TemplateDirective {
         Set<Integer> excludeChannelIds = new HashSet<>();
 
         if (channelId <= 0) {
+            List<TypeChannel> typeChannels = typeChannelService.finAll();
             List<Channel> channels = channelService.findAll(Consts.STATUS_CLOSED);
-            if (channels != null) {
-                channels.forEach((c) -> excludeChannelIds.add(c.getId()));
+            List<ChannelView> channelViews = new ArrayList<>();
+            ChannelView channelView;
+            for(TypeChannel typeChannel : typeChannels) {
+                channelView = ChannelView.from(typeChannel, channels.stream()
+                        .filter(channel -> channel.getTypeChannelId() == typeChannel.getId()).collect(Collectors.toList()));
+                if(channelView != null) {
+                    channelViews.add(channelView);
+                }
+            }
+
+
+            //
+            if (!channelViews.isEmpty()) {
+                channelViews.forEach((c) -> c.getChannels().forEach((c1) -> excludeChannelIds.add(c1.getId())));
             }
         }
 

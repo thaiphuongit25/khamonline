@@ -82,13 +82,21 @@
 						</li>
 					</#if>
                     <@shiro.hasPermission name="admin">
-					<#list channels as row>
-						<li>
-							<a href="${base}/channel/${row.id}" nav="${row.name}">${row.name}</a>
-						</li>
+					<#list typeChannel as row>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span>${row.name}</span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <#list row.channels as item>
+                                    <li><a href="${base}/channel/${item.id}">${item.name}</a></li>
+                                </#list>
+                            </ul>
+                        </li>
 					</#list>
                     </@shiro.hasPermission>
                 </ul>
+
                 <ul class="navbar-button list-inline" id="header_user">
 
 

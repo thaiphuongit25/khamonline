@@ -1,10 +1,14 @@
 package com.mtons.Khamonline.config;
 
 import com.mtons.Khamonline.base.lang.Consts;
+import com.mtons.Khamonline.modules.data.view.ChannelView;
+import com.mtons.Khamonline.modules.entity.Channel;
 import com.mtons.Khamonline.modules.entity.Options;
+import com.mtons.Khamonline.modules.entity.TypeChannel;
 import com.mtons.Khamonline.modules.service.ChannelService;
 import com.mtons.Khamonline.modules.service.MailService;
 import com.mtons.Khamonline.modules.service.OptionsService;
+import com.mtons.Khamonline.modules.service.TypeChannelService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +22,10 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.ServletContextAware;
 
 import javax.servlet.ServletContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @since 3.0
@@ -36,6 +42,8 @@ public class ContextStartup implements ApplicationRunner, ServletContextAware {
     private MailService mailService;
     @Autowired
     private SiteOptions siteOptions;
+    @Autowired
+    private TypeChannelService typeChannelService;
 
     private ServletContext servletContext;
 
@@ -86,7 +94,19 @@ public class ContextStartup implements ApplicationRunner, ServletContextAware {
     }
 
     public void resetChannels() {
-        servletContext.setAttribute("channels", channelService.findAll(Consts.STATUS_NORMAL));
+        List<TypeChannel> typeChannels = typeChannelService.finAll();
+        List<Channel> channels = channelService.findAll(Consts.STATUS_NORMAL);
+        List<ChannelView> channelViews = new ArrayList<>();
+        ChannelView channelView;
+        for(TypeChannel typeChannel : typeChannels) {
+            channelView = ChannelView.from(typeChannel, channels.stream()
+                    .filter(channel -> channel.getTypeChannelId() == typeChannel.getId()).collect(Collectors.toList()));
+            if(channelView != null) {
+                channelViews.add(channelView);
+            }
+        }
+
+        servletContext.setAttribute("typeChannel", channelViews);
     }
 
 }

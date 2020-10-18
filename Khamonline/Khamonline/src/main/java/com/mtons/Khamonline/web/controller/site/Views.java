@@ -96,4 +96,5 @@ public interface Views {
 
     String REDIRECT_USER_HOME = "redirect:/users/%d";
     String REDIRECT_INDEX = "redirect:/index";
+    String REDIRECT_POST_EDIT = "redirect:/post/editing";
 }

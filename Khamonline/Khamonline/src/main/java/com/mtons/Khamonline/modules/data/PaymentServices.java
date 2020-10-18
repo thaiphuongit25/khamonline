@@ -46,7 +46,7 @@ public class PaymentServices {
 
     private RedirectUrls getRedirectURLs() {
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:8080/PaypalTest/cancel.html");
+        redirectUrls.setCancelUrl("http://localhost:8080/channel/editing");
         redirectUrls.setReturnUrl("http://localhost:8080/review_payment");
 
         return redirectUrls;

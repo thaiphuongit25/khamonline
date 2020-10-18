@@ -134,4 +134,6 @@ public interface PostService {
 	void unfavor(long userId, long postId);
 
 	long count();
+
+	String validatePostData(long userId, String ngayKham) throws Exception;
 }

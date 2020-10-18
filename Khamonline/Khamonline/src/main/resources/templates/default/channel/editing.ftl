@@ -11,6 +11,9 @@
                 <input type="hidden" name="id" value="${view.id}"/>
                 <input type="hidden" name="authorId" value="${view.authorId}"/>
             </#if>
+            <#if error??>
+                <p class="btn-warning">${error}</p>
+            </#if>
             <input type="hidden" id="thumbnail" name="thumbnail" value="${view.thumbnail}"/>
 
             <div class="form-group">
@@ -43,6 +46,9 @@
             </div>
             <div class="form-group">
                 <#include "/default/channel/editor/${editor}.ftl"/>
+            </div>
+            <div class="form-group">
+                <p>Bạn sẽ phải thanh toán 10$ cho đợn khám này</p>
             </div>
         </div>
         <div class="col-xs-12 col-md-4">
