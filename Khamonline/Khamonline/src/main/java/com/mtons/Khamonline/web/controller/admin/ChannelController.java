@@ -10,10 +10,12 @@
 package com.mtons.Khamonline.web.controller.admin;
 
 import com.mtons.Khamonline.modules.entity.Channel;
+import com.mtons.Khamonline.modules.entity.TypeChannel;
 import com.mtons.Khamonline.modules.service.ChannelService;
 import com.mtons.Khamonline.base.lang.Result;
 import com.mtons.Khamonline.base.lang.Consts;
 import com.mtons.Khamonline.config.ContextStartup;
+import com.mtons.Khamonline.modules.service.TypeChannelService;
 import com.mtons.Khamonline.web.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author langhsu
@@ -36,7 +39,9 @@ public class ChannelController extends BaseController {
 	private ChannelService channelService;
 	@Autowired
 	private ContextStartup contextStartup;
-	
+	@Autowired
+	private TypeChannelService typeChannelService;
+
 	@RequestMapping("/list")
 //	@RequiresPermissions("channel:list")
 	public String list(ModelMap model) {
@@ -46,6 +51,8 @@ public class ChannelController extends BaseController {
 	
 	@RequestMapping("/view")
 	public String view(Integer id, ModelMap model) {
+		List<TypeChannel> typeChannels = typeChannelService.finAll();
+		model.put("types", typeChannels);
 		if (id != null) {
 			Channel view = channelService.getById(id);
 			model.put("view", view);

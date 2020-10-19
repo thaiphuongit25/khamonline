@@ -15,7 +15,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">bảng chỉ mục</h3>
                     <div class="box-tools">
-                        <a class="btn btn-default btn-sm" href="${base}/admin/channel/view">Thêm phần</a>
+                        <a class="btn btn-default btn-sm" href="${base}/admin/channel/view">Thêm mới</a>
                     </div>
                 </div>
                 <div class="box-body">

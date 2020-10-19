@@ -41,6 +41,16 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-lg-2 control-label">Nhóm Bệnh</label>
+                            <div class="col-lg-3">
+                                <select name="typeChannelId" class="form-control">
+                                    <#list types as type>
+                                        <option value="${type.id}">${type.name}</option>
+                                    </#list>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-lg-2 control-label">Hình nhỏ</label>
                             <div class="col-lg-3">
                                 <div class="thumbnail-box">
