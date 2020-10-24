@@ -10,8 +10,11 @@
 package com.mtons.Khamonline.web.controller.admin;
 
 import com.mtons.Khamonline.modules.data.PostVO;
+import com.mtons.Khamonline.modules.entity.PaymentHistory;
 import com.mtons.Khamonline.modules.entity.Post;
+import com.mtons.Khamonline.modules.repository.PaymentHistoryRepository;
 import com.mtons.Khamonline.modules.service.ChannelService;
+import com.mtons.Khamonline.modules.service.PaymentHistoryService;
 import com.mtons.Khamonline.modules.service.PostService;
 import com.mtons.Khamonline.base.lang.Consts;
 import com.mtons.Khamonline.base.lang.Result;
@@ -23,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -32,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +48,8 @@ import java.util.List;
 public class PostController extends BaseController {
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private PaymentHistoryRepository paymentHistoryServiceRepository;
 	@Autowired
 	private ChannelService channelService;
 
@@ -145,6 +152,18 @@ public class PostController extends BaseController {
 		Result data = Result.failure("lỗi hệ thống");
 		if (id != null) {
 			try {
+				List<PaymentHistory> paymentHistories = paymentHistoryServiceRepository.findAll();
+				List<PaymentHistory> result = new ArrayList<>();
+				for (PaymentHistory paymentHistory: paymentHistories) {
+					if (paymentHistory.getPostId() == id.get(0)) {
+						result.add(paymentHistory);
+					}
+				}
+				if (result != null) {
+					for (PaymentHistory pay: result) {
+						paymentHistoryServiceRepository.deleteById(pay.getId());
+					}
+				}
 				postService.delete(id);
 				data = Result.success();
 			} catch (Exception e) {

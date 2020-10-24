@@ -15,7 +15,7 @@ public class PaymentHistory implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     /**
      *
@@ -50,7 +50,7 @@ public class PaymentHistory implements Serializable {
 
     private Date updatedAt;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
